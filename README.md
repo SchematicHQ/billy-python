@@ -1,7 +1,9 @@
 ## Getting started
 1. Clone the repo:
 
+```
 git clone https://github.com/SchematicHQ/BillyAI.git
+```
 
 2. Install all requirements:
 
