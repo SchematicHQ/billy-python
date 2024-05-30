@@ -17,6 +17,8 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
+4. Ask Jas for Flickr keys
+
 ## Running locally
 
 Run the following command
