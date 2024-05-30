@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+    <title>Jasdeep's site</title>
+    <head> 
+        <link rel='stylesheet' href="{{ url_for('static', filename='style.css') }}">
+        <link rel='stylesheet' href="{{ url_for('static', filename='pikaday.css') }}">
+        <link href='http://fonts.googleapis.com/css?family=Karla' rel='stylesheet' type='text/css'>
+        <!--<script src='static/render_page.html'></script>-->
+        <script type="text/javascript" src="./static/jquery.js"></script>
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        <div id="container">
+            <div id='title'>
+                Billy
+            </div>
+            {% include 'navbar.html' %}
+            {% block body %}
+            {% endblock %}
+        </div>
+    </body>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+
+    {% block js %}
+    {% endblock %}
+
+</html>

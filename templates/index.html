@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <form action="/search" method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.search }}
+        <input type="submit" value="Search">
+    </form>
+{% endblock %}
