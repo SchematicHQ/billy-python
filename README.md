@@ -27,4 +27,4 @@ Run the following command
 flask --app main run         
 ```
 
-Open the app locally at http://127.0.0.1:5000. There is only one user, `admin`, and the password is `secret`
+Open the app locally at http://127.0.0.1:5000. Navigate to `/register` route to create a new user account.

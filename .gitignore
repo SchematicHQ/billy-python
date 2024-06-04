@@ -1,6 +1,8 @@
 # Env files
 *.env
 .npmrc
+/.venv
+/.venv/*
 
 # IDEs and editors
 /.idea
