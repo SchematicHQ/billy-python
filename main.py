@@ -8,21 +8,30 @@ import flickr_api
 from flickr_api.api import flickr
 import sys
 import xmltodict, json
-from flask_simplelogin import SimpleLogin, get_username, login_required
 import config
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, logout_user
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 flickr_api.set_keys(api_key = os.environ.get("FLICKR_API_KEY"), api_secret=os.environ.get("FLICKR_SECRET_KEY"))
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("SQL_DATABASE")
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+db = SQLAlchemy()
 
-simple_login = SimpleLogin(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+# Initialize app with extension
+db.init_app(app)
+# Create database within app context
+with app.app_context():
+    db.create_all()
 
 # set config variables
 #SECRET_KEY = os.urandom(32)
 #app.config['SECRET_KEY'] = SECRET_KEY
 
 @app.route('/', methods=['GET', 'POST'])
-@login_required()
 def main():
     form = SearchForm()
     return render_template('index.html', form=form)
@@ -48,7 +57,52 @@ def settings():
 def favorites():
     render_template('favorites.html')
 
-# function to perform flickr search
+# model classes
+class Users(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(250), unique=True,
+                         nullable=False)
+    password = db.Column(db.String(250),
+                         nullable=False)
+
+# login, logout, registration
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    # If a post request was made, find the user by 
+    # filtering for the username
+    if request.method == "POST":
+        user = Users.query.filter_by(
+            username=request.form.get("username")).first()
+        # Check if the password entered is the same as the user's password
+        if user.password == request.form.get("password"):
+            # Use the login_user method to log in the user
+            login_user(user)
+            # Redirect the user back to the home
+            return redirect(url_for("main"))
+    return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("login"))
+
+@app.route('/register', methods=["GET", "POST"])
+def register():
+  # If the user made a POST request, create a new user
+    if request.method == "POST":
+        user = Users(username=request.form.get("username"),
+                     password=request.form.get("password"))
+        # Add the user to the database
+        db.session.add(user)
+        # Commit the changes made
+        db.session.commit()
+        # Once user account created, redirect them to login route
+        return redirect(url_for("login"))
+    # Renders sign_up template if user made a GET request
+    return render_template("sign_up.html")
+
+# flickr integration
 def search_flickr(search):
     photo_array = {}
 
@@ -60,7 +114,11 @@ def search_flickr(search):
     print(photo_array, file=sys.stderr)
 
     return photo_array
-
+ 
+@login_manager.user_loader
+def loader_user(user_id):
+    return Users.query.get(user_id)
+ 
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.
     port = int(os.environ.get('PORT', 5000))

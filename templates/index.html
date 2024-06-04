@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    <form action="/search" method="POST">
-        {{ form.hidden_tag() }}
-        {{ form.search }}
-        <input type="submit" value="Search">
-    </form>
+    {% if current_user.is_authenticated %}
+        <form action="/search" method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.search }}
+            <input type="submit" value="Search">
+        </form>
+    {% else %}
+        <h1>You are not logged in</h1>
+        <a href="/login">Login</a>
+    {% endif %}
 {% endblock %}
