@@ -1,3 +1,7 @@
 {% extends 'base.html' %}
 
-This is my favorites page which will house my favorites.
+{% block body %}
+    {% for photo in photos %}
+        <li><img src="{{ photos[photo]['url'] }}" width="500" height="600"></li>
+    {% endfor %}
+{% endblock %}
