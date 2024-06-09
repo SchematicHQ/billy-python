@@ -19,8 +19,8 @@ client = Schematic(os.environ.get("SCHEMATIC_API_KEY"), sch_config)
 ######
 def check_flag(organization_id, flag_key):
     # set company context to reference company
-    company_context = {
-    "organization_id" : organization_id
+    company = {
+        "organization_id" : str(organization_id)
     }
 
     # set flag key to evaluate
@@ -30,7 +30,7 @@ def check_flag(organization_id, flag_key):
     # if value is not available in local cache, Schematic client will submit network request
     response = client.features.check_flag(
         key = key,
-        company=company_context
+        company=company
         )
     
     return response.data.value
@@ -38,7 +38,7 @@ def check_flag(organization_id, flag_key):
 ######
 # Schematic User Upsert - create and update user
 ######
-def user_create_update(current_user):
+def user_create_update(current_user, **kwargs):
     name = current_user.username
 
     user = {
@@ -49,11 +49,12 @@ def user_create_update(current_user):
         "organization_id" : current_user.company.id
     }
 
-    traits = {}
-
-    print(company)
     print(user)
-    print(name)
+    print(company)
+
+    traits = {}
+    for key, value in kwargs.items():
+        traits[key] = value
 
     response  = client.companies.upsert_user(
       company = company,
@@ -61,8 +62,6 @@ def user_create_update(current_user):
       name = name,
       traits = traits
     )
-
-    print(json.dumps(json.loads(response.json()), sort_keys=True, indent=4, separators=(",", ": ")))
 
     return response
 
@@ -76,11 +75,13 @@ def company_create_update(current_user, **kwargs):
     company["organization_id"] = current_user.company.id
 
     traits = {}
+    for key, value in kwargs.items():
+        traits[key] = value
 
     response = client.companies.upsert_company(
         keys = company,
         name = name,
-        tratis = traits
+        traits = traits
     )
 
     return response
@@ -94,12 +95,17 @@ def send_identify_event(current_user, **kwargs):
     company = {}
     company["organization_id"] = current_user.company.id
 
+    traits = {}
+    for key, value in kwargs.items():
+        traits[key] = value
+
     response = client.identify(
         keys=user,
         name=name,
         company=EventBodyIdentifyCompany(
             keys=company,
-        )
+        ),
+        traits=traits
     )
 
     return response

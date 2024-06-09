@@ -83,7 +83,7 @@ def add_favorite(photo_id):
     user = current_user
 
     # POST request -- check if company is at limit already
-    if request.method == 'GET' and schematic.check_flag(user.company.id,'favorites'):
+    if request.method == 'GET' and schematic.check_flag(user.company.id,'favorite-flag'):
         company = Company.query.get(user.company_id)
         favorite = Favorites(photo_id=photo_id)
         company.favorites.append(favorite)
@@ -91,9 +91,10 @@ def add_favorite(photo_id):
         db.session.commit()
 
         # update favorite count
-        schematic.company_create_update(user, favorite_count=favorites.query(company_id=company.id).count())
+        schematic.company_create_update(user, favorite_count=Favorites.query.filter_by(company_id=company.id).count())
 
-        return photo_id;
+        return photo_id
+    return photo_id
 
 @app.route('/favorites')
 def favorites():
@@ -141,8 +142,8 @@ def register():
         db.session.commit()
 
         # Create Schematic user and company on registration
-        schematic.user_create_update(user)
         schematic.company_create_update(user)
+        schematic.user_create_update(user)
 
         # Once user account created, redirect them to login route
         return redirect(url_for("login"))
@@ -158,27 +159,17 @@ def retrieve_images_by_keyword(search):
     for photo in photos['rsp']['photos']['photo']:
         photo_array[photo['@id']] = {"owner" : photo['@owner'], "id" : photo['@id'], "url" : "https://live.staticflickr.com/"+photo['@server']+"/"+photo["@id"]+"_"+photo['@secret']+".jpg"}
     
-    print(photo_array, file=sys.stderr)
-
     return photo_array
 
 def retrieve_images_by_photo_id(photos):
     photo_array = {}
     
-    print("in function")
-    print(photos)
-
     for photo in photos:
-        print(photo)
-        print(photo.photo_id)
         if photo.photo_id:
             photo_metadata = xmltodict.parse(flickr.photos.getInfo(photo_id = photo.photo_id))
             photo_metadata = photo_metadata['rsp']['photo']
-            print(photo_metadata)
             photo_array[photo_metadata['@id']] = {"owner" : photo_metadata['owner']['@nsid'], "id" : photo_metadata['@id'], "url" : "https://live.staticflickr.com/"+photo_metadata['@server']+"/"+photo_metadata["@id"]+"_"+photo_metadata['@secret']+".jpg"}
     
-    print(photo_array, file=sys.stderr)
-
     return photo_array
  
 @login_manager.user_loader

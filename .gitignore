@@ -4,6 +4,9 @@
 /.venv
 /.venv/*
 
+# db
+db.sqlite
+
 # IDEs and editors
 /.idea
 .project
