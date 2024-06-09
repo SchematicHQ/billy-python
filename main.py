@@ -55,8 +55,9 @@ class Users(UserMixin, db.Model):
 def main():
     form = SearchForm()
     user = current_user
+    search_feature = schematic.check_flag(user.company.id,'search-queries')
     schematic.send_identify_event(user)
-    return render_template('index.html', form=form)
+    return render_template('index.html', form=form, search_feature=search_feature)
 
 @app.route('/search', methods=['POST'])
 def search():
