@@ -1,32 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up</title>
-    <style>
-      h1 {
-        color: green;
-      }
-    </style>
+    <link
+      href="{{ url_for('static', filename='css/styles.css') }}"
+      rel="stylesheet"
+    />
+
+    <link
+      href="http://fonts.googleapis.com/css?family=Karla"
+      rel="stylesheet"
+      type="text/css"
+    />
   </head>
-  <body>
-    <nav>
-      <ul>
-        <li><a href="/login">Login</a></li>
-        <li><a href="/register">Create account</a></li>
-      </ul>
-    </nav>
-    <h1>Create an account</h1>
-    <form action="#" method="post">
-      <label for="username">Username:</label>
-      <input type="text" name="username" />
-      <label for="username">Company:</label>
-      <input type="text" name="company" />
-      <label for="password">Password:</label>
-      <input type="password" name="password" />
-      <button type="submit">Submit</button>
-    </form>
+  <body class="h-full">
+    <div class="h-full w-full flex items-center justify-content">
+      <div class="py-0 text-center mx-auto">
+        <svg
+          width="101"
+          height="43"
+          viewBox="0 0 101 43"
+          fill="none"
+          class="mx-auto mb-12"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 33.2801V32.1708C1.89815 32.1708 3.00541 31.8186 3.32177 31.1142V4.543C3.00541 3.83866 1.89815 3.48649 0 3.48649V2.37715H12.6016C16.9955 2.37715 20.2997 3.0991 22.5142 4.543C24.7639 5.9869 25.8887 7.69492 25.8887 9.66708C25.8887 13.4001 23.8851 15.8829 19.8779 17.1155C22.479 17.7494 24.5178 18.7355 25.9941 20.0737C27.4705 21.412 28.2087 22.803 28.2087 24.2469C28.2087 26.9234 27.1366 29.1069 24.9923 30.7973C22.8833 32.4525 19.7373 33.2801 15.5543 33.2801H0ZM10.018 4.17322V16.4287H12.4434C14.9743 16.4287 16.6616 15.8829 17.5052 14.7912C18.3488 13.6994 18.7706 12.009 18.7706 9.7199C18.7706 6.02211 16.0991 4.17322 10.7562 4.17322H10.018ZM10.018 17.9607V31.484H13.7089C18.63 31.484 21.0906 29.0893 21.0906 24.2998C21.0906 22.6446 20.4754 21.183 19.2452 19.9152C18.0149 18.6122 15.9585 17.9607 13.0762 17.9607H10.018Z"
+            fill="black"
+          />
+          <path
+            d="M30.5706 33.2801V32.1708C32.4688 32.1708 33.576 31.8186 33.8924 31.1142V13.2064C32.0646 13.0655 30.9573 12.9951 30.5706 12.9951V11.7801C31.2385 11.7801 32.8554 11.4103 35.4215 10.6708C37.9875 9.89599 39.6747 9.5086 40.4832 9.5086V31.1142C40.7996 31.8186 41.9068 32.1708 43.805 32.1708V33.2801H30.5706ZM37.056 6.12777C36.2124 6.12777 35.3512 5.82842 34.4724 5.22973C33.6288 4.59582 33.207 3.85627 33.207 3.01106C33.207 2.2715 33.5936 1.58477 34.3669 0.95086C35.1754 0.316953 36.019 0 36.8978 0C37.7414 0 38.5851 0.316953 39.4287 0.95086C40.3075 1.54955 40.7468 2.28911 40.7468 3.16953C40.7468 3.90909 40.3426 4.59582 39.5341 5.22973C38.7608 5.82842 37.9348 6.12777 37.056 6.12777Z"
+            fill="black"
+          />
+          <path
+            d="M45.2846 33.2801V32.1708C47.1828 32.1708 48.29 31.8186 48.6064 31.1142V3.69779C46.7082 3.55692 45.601 3.48649 45.2846 3.48649V2.2715C45.9525 2.2715 47.5694 1.90172 50.1354 1.16216C52.7015 0.387387 54.3887 0 55.1972 0V31.1142C55.5135 31.8186 56.6208 32.1708 58.5189 32.1708V33.2801H45.2846Z"
+            fill="black"
+          />
+          <path
+            d="M60.0109 33.2801V32.1708C61.9091 32.1708 63.0163 31.8186 63.3327 31.1142V3.69779C61.4346 3.55692 60.3273 3.48649 60.0109 3.48649V2.2715C60.6788 2.2715 62.2958 1.90172 64.8618 1.16216C67.4278 0.387387 69.115 0 69.9235 0V31.1142C70.2399 31.8186 71.3471 32.1708 73.2453 32.1708V33.2801H60.0109Z"
+            fill="black"
+          />
+          <path
+            d="M85.2348 10.0369V11.1462C84.2154 11.1462 83.4772 11.2166 83.0203 11.3575L89.2947 26.8354L95.3055 11.7273C94.8134 11.3399 93.8292 11.1462 92.3529 11.1462V10.0369H101V11.1462C99.1018 11.1462 98.0297 11.4279 97.7837 11.9914L87.1329 38.6683C85.973 41.5561 84.1275 43 81.5967 43C79.0306 43 77.7476 42.1548 77.7476 40.4644C77.7476 39.8305 77.941 39.3198 78.3276 38.9324C78.7494 38.545 79.3294 38.3514 80.0676 38.3514C80.63 38.3514 81.1221 38.6155 81.5439 39.1437C81.9657 39.672 82.4403 39.9361 82.9676 39.9361C83.7057 39.9361 84.1978 39.6192 84.4439 38.9853L85.8148 35.6044L76.4822 12.2027C76.1658 11.4984 75.0586 11.1462 73.1604 11.1462V10.0369H85.2348Z"
+            fill="black"
+          />
+        </svg>
+        <h1 class="text-4xl mb-12">Create an account</h1>
+        <div class="text-left">
+          <form
+            action="#"
+            method="post"
+            class="flex flex-col space-y-4 min-w-[380px] mx-auto"
+          >
+            <div class="flex flex-col space-y-1">
+              <label for="username" class="text-base font-medium"
+                >User Name</label
+              >
+              <input
+                type="text"
+                name="username"
+                class="rounded-lg text-lg px-3 py-2 border-gray-200 border-[1px]"
+                placeholder="Enter user name"
+              />
+            </div>
+            <div class="flex flex-col space-y-1">
+              <label for="company" class="text-base font-medium"
+                >Company name</label
+              >
+              <input
+                type="text"
+                name="company"
+                class="rounded-lg text-lg px-3 py-2 border-gray-200 border-[1px]"
+                placeholder="Enter company name"
+              />
+            </div>
+            <div class="flex flex-col space-y-1">
+              <label for="username" class="text-base font-medium"
+                >Password</label
+              >
+              <input
+                type="password"
+                name="username"
+                class="rounded-lg text-lg px-3 py-2 border-gray-200 border-[1px]"
+                placeholder="Enter password"
+              />
+            </div>
+            <div class="flex flex-row pt-6">
+              <button
+                type="submit"
+                class="w-full text-center bg-blue-500 px-5 py-2.5 text-base leading-none rounded-full text-white hover:bg-blue-400 font-body"
+              >
+                Register
+              </button>
+            </div>
+          </form>
+          <div class="flex flex-col text-sm items-center justify-center mt-4">
+            <span>Already have an account?</span>
+            <a href="/login" class="text-blue-500 hover:underline">Sign in</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

@@ -1,1 +1,137 @@
-<div>build a nav bar here</div>
+<div
+  class="sticky top-0 px-8 py-8 flex flex-row justify-between items-center bg-white"
+>
+  <div class="flex flex-row justify-between flex-1 space-x-8">
+    <div class="flex items-center justify-center">
+      <div class="flex relative">
+        <input
+          type="text"
+          name="search"
+          class="pl-12 rounded-lg text-base px-4 py-3 border-gray-200 border-[1px]"
+          placeholder="Search"
+        />
+        <svg
+          class="absolute left-4 top-[50%] translate-y-[-50%]"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g clip-path="url(#clip0_16_1968)">
+            <path
+              d="M18.3332 18.3333L16.6665 16.6666M9.58317 17.5C10.6228 17.5 11.6523 17.2952 12.6127 16.8973C13.5732 16.4995 14.446 15.9164 15.1811 15.1812C15.9162 14.4461 16.4994 13.5734 16.8972 12.6129C17.2951 11.6524 17.4998 10.6229 17.4998 9.58329C17.4998 8.54366 17.2951 7.51421 16.8972 6.55372C16.4994 5.59322 15.9162 4.72049 15.1811 3.98536C14.446 3.25023 13.5732 2.6671 12.6127 2.26925C11.6523 1.8714 10.6228 1.66663 9.58317 1.66663C7.48354 1.66663 5.4699 2.5007 3.98524 3.98536C2.50058 5.47003 1.6665 7.48366 1.6665 9.58329C1.6665 11.6829 2.50058 13.6966 3.98524 15.1812C5.4699 16.6659 7.48354 17.5 9.58317 17.5Z"
+              stroke="#111827"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_16_1968">
+              <rect width="20" height="20" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Alert -->
+    <div
+      class="flex flex-row w-full space-x-4 flex-1 bg-red-100 text-black justify-between px-5 py-1.5 items-center rounded-lg"
+    >
+      <div class="flex-1 items-center flex space-x-2 flex-row w-full">
+        <span
+          ><svg
+            width="22"
+            height="21"
+            viewBox="0 0 22 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10.9919 21H10.9979C15.0303 21 19.8825 20.0629 21.4112 17.4338C22.8961 14.8784 21.3332 10.4214 19.376 7.10214C17.3517 3.66875 14.0876 0 10.9999 0C7.91395 0 4.65204 3.66573 2.62763 7.09508C0.668438 10.4163 -0.896581 14.8753 0.588389 17.4326C2.11432 20.0608 6.96338 20.9987 10.9917 20.9997L10.9919 21ZM9.93226 6.2998C9.93226 5.72002 10.4106 5.25048 10.9999 5.25048C11.5893 5.25048 12.0676 5.72002 12.0676 6.2998V11.5503C12.0676 12.1301 11.5893 12.5996 10.9999 12.5996C10.4106 12.5996 9.93226 12.1301 9.93226 11.5503V6.2998ZM10.9999 13.3871C11.5393 13.3871 12.0255 13.707 12.2327 14.1972C12.4388 14.6884 12.3247 15.2524 11.9435 15.6274C11.5613 16.0035 10.9879 16.1157 10.4896 15.9129C9.9913 15.7091 9.66611 15.2307 9.66611 14.7002C9.66611 14.3517 9.8062 14.018 10.0563 13.7719C10.3065 13.5259 10.6457 13.3871 10.9999 13.3871Z"
+              fill="#D80027"
+            />
+          </svg>
+        </span>
+        <span class="leading-none">Past Query limit for this month</span>
+      </div>
+
+      <div>
+        <span class="text-blue-500 leading-none hover:underline">Change plan</span>
+      </div>
+    </div>
+
+    <!-- User/Notifications -->
+    <div class="flex space-x-6">
+      <!-- User Dropdown -->
+      <div class="flex flex-row space-x-4 items-center">
+        <div>
+          <img src="https://picsum.photos/50/50" class="rounded-full" alt="" />
+        </div>
+        <div class="flex flex-col space-y-1">
+          <div class="leading-none text-base">Jasdeep</div>
+          <div class="leading-none text-base text-gray-400">Billy AI</div>
+        </div>
+        <div class="pl-2">
+          <svg
+            width="14"
+            height="7"
+            viewBox="0 0 14 7"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12.28 0.966553L7.9333 5.31322C7.41997 5.82655 6.57997 5.82655 6.06664 5.31322L1.71997 0.966553"
+              stroke="#9CA3AF"
+              stroke-width="1.5"
+              stroke-miterlimit="10"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Notifications -->
+      <div
+        class="relative rounded-2xl border-2 border-gray-200 w-[50px] items-center justify-center flex"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12.0201 2.90991C8.71009 2.90991 6.02009 5.59991 6.02009 8.90991V11.7999C6.02009 12.4099 5.76009 13.3399 5.45009 13.8599L4.30009 15.7699C3.59009 16.9499 4.08009 18.2599 5.38009 18.6999C9.69009 20.1399 14.3401 20.1399 18.6501 18.6999C19.8601 18.2999 20.3901 16.8699 19.7301 15.7699L18.5801 13.8599C18.2801 13.3399 18.0201 12.4099 18.0201 11.7999V8.90991C18.0201 5.60991 15.3201 2.90991 12.0201 2.90991Z"
+            stroke="#111827"
+            stroke-width="1.5"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+          />
+          <path
+            d="M13.8699 3.19994C12.6606 2.85553 11.3792 2.85553 10.1699 3.19994C10.4599 2.45994 11.1799 1.93994 12.0199 1.93994C12.8599 1.93994 13.5799 2.45994 13.8699 3.19994Z"
+            stroke="#111827"
+            stroke-width="1.5"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M15.02 19.0601C15.02 20.7101 13.67 22.0601 12.02 22.0601C11.2 22.0601 10.44 21.7201 9.90002 21.1801C9.33818 20.6174 9.02181 19.8552 9.02002 19.0601"
+            stroke="#111827"
+            stroke-width="1.5"
+            stroke-miterlimit="10"
+          />
+        </svg>
+        <div
+          class="absolute w-3 h-3 bg-orange-400 rounded-full -right-1.5 -top-1.5"
+        ></div>
+      </div>
+    </div>
+  </div>
+  <div></div>
+</div>
