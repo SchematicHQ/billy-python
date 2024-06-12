@@ -1,4 +1,5 @@
 import os
+import config
 from forms import SearchForm, LoginForm
 from flask import Flask, render_template
 from flask import Flask
@@ -8,15 +9,17 @@ import flickr_api
 from flickr_api.api import flickr
 import sys
 import xmltodict, json
-import config
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user
+from stripe import StripeClient
+from vendors import schematic_python as schematic 
 
 app = Flask(__name__)
 flickr_api.set_keys(api_key = os.environ.get("FLICKR_API_KEY"), api_secret=os.environ.get("FLICKR_SECRET_KEY"))
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("SQL_DATABASE")
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 db = SQLAlchemy()
+#client = StripeClient("sk_test_...")
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -51,16 +54,20 @@ class Users(UserMixin, db.Model):
 @app.route('/', methods=['GET', 'POST'])
 def main():
     form = SearchForm()
-    items = range(50)
-    return render_template('index.html', form=form, items=items)
+    user = current_user
+    schematic.send_identify_event(user)
+    return render_template('index.html', form=form)
 
 @app.route('/search', methods=['POST'])
 def search():
     form = SearchForm()
     if form.validate_on_submit():
-        print("in", file=sys.stderr)
         searched_data = form.search.data
         photo_array = retrieve_images_by_keyword(searched_data)
+
+        # send event to schematic
+        schematic.send_track_event(current_user,'search-query')
+
         return render_template('search.html', 
                                form = form,
                                search=searched_data,
@@ -73,15 +80,19 @@ def settings():
 
 @app.route('/submit_favorite/<photo_id>', methods=['GET','POST'])
 def add_favorite(photo_id):
-    print("in function")
-    if request.method == 'GET': # POST request
-        user = current_user
-        company = Company.query.get(current_user.company_id)
+    user = current_user
+
+    # POST request -- check if company is at limit already
+    if request.method == 'GET' and schematic.check_flag(user.company.id,'favorites'):
+        company = Company.query.get(user.company_id)
         favorite = Favorites(photo_id=photo_id)
         company.favorites.append(favorite)
-
         db.session.add(favorite)
         db.session.commit()
+
+        # update favorite count
+        schematic.company_create_update(user, favorite_count=favorites.query(company_id=company.id).count())
+
         return photo_id;
 
 @app.route('/favorites')
@@ -116,7 +127,7 @@ def logout():
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
-  # If the user made a POST request, create a new user and company
+    # If the user made a POST request, create a new user and company
     if request.method == "POST":        
         user = Users(username=request.form.get("username"),
                      password=request.form.get("password"))
@@ -128,7 +139,11 @@ def register():
         db.session.add(user)
         # Commit the changes made
         db.session.commit()
-        print(company.users.username)
+
+        # Create Schematic user and company on registration
+        schematic.user_create_update(user)
+        schematic.company_create_update(user)
+
         # Once user account created, redirect them to login route
         return redirect(url_for("login"))
     # Renders sign_up template if user made a GET request
