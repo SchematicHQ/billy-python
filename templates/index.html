@@ -1,12 +1,11 @@
-{% extends 'base.html' %} {% block body %} {% if current_user.is_authenticated
-%}
+{% extends 'base.html' %} {% block body %} 
+{% if current_user.is_authenticated%}
 <form action="/search" method="POST">
   {{ form.hidden_tag() }} {{ form.search }}
   <input type="submit" value="Search" />
 </form>
 {% else %}
 <div class="columns-4 gap-8">
-  {% for i in items %}
   <div class="flex flex-col break-inside-avoid-column mb-8">
     <img src="https://picsum.photos/200/300" class="w-full rounded-2xl" alt="" />
     <div class="flex flex-row justify-between mt-4">
@@ -34,7 +33,6 @@
       </svg>
     </div>
   </div>
-  {% endfor %}
 </div>
 <!-- <h1>You are not logged in</h1>
         <a href="/login">Login</a> -->

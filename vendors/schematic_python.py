@@ -39,7 +39,7 @@ def check_flag(organization_id, flag_key):
 # Schematic User Upsert - create and update user
 ######
 def user_create_update(current_user, **kwargs):
-    name = current_user.username
+    name = str(current_user.username)
 
     user = {
         "user_id" : current_user.id
@@ -69,7 +69,7 @@ def user_create_update(current_user, **kwargs):
 # Schematic Company Upsert - create and update company
 ######
 def company_create_update(current_user, **kwargs):
-    name = current_user.company.company
+    name = str(current_user.company.company)
     
     company = {}
     company["organization_id"] = current_user.company.id

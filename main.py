@@ -110,10 +110,13 @@ def favorites():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    print("in route")
     # If a post request was made, find the user by filtering for the username
     if request.method == "POST":
+        print("in post")
         user = Users.query.filter_by(
             username=request.form.get("username")).first()
+        
         # Check if the password entered is the same as the user's password
         if user.password == request.form.get("password"):
             # Use the login_user method to log in the user
@@ -130,7 +133,7 @@ def logout():
 @app.route('/register', methods=["GET", "POST"])
 def register():
     # If the user made a POST request, create a new user and company
-    if request.method == "POST":        
+    if request.method == "POST":   
         user = Users(username=request.form.get("username"),
                      password=request.form.get("password"))
         # Add the user to the database
