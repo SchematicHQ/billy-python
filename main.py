@@ -57,7 +57,9 @@ def main():
     user = current_user
     search_feature = schematic.check_flag(user.company.id,'search-queries')
     schematic.send_identify_event(user)
-    return render_template('index.html', form=form, search_feature=search_feature)
+    
+    return render_template('index.html', form=form, search_feature=search_feature, current_path=request.path)
+
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -77,7 +79,7 @@ def search():
 
 @app.route('/settings')
 def settings():
-    render_template('settings.html')
+    return render_template('settings.html', current_path=request.path)
 
 @app.route('/submit_favorite/<photo_id>', methods=['GET','POST'])
 def add_favorite(photo_id):
@@ -91,6 +93,7 @@ def add_favorite(photo_id):
         db.session.add(favorite)
         db.session.commit()
 
+
         # update favorite count
         schematic.company_create_update(user, favorite_count=Favorites.query.filter_by(company_id=company.id).count())
 
@@ -103,8 +106,9 @@ def favorites():
     company = Company.query.get(current_user.company_id)
     favorites = company.favorites
     photo_array = retrieve_images_by_photo_id(favorites)
-    return render_template('favorites.html', 
-                               photos = photo_array)
+
+    print(photo_array)
+    return render_template('favorites.html', photos = photo_array, current_path=request.path)
 
 # login, logout, registration
 

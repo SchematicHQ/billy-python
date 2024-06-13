@@ -1,7 +1,5 @@
-{% extends 'base.html' %}
-
-{% block body %}
-    {% for photo in photos %}
-        <li><img src="{{ photos[photo]['url'] }}" width="500" height="600"></li>
-    {% endfor %}
-{% endblock %}
+{% extends 'base.html' %} {% block body %} {% for photo in photos %}
+<li>
+  <img src="{{ photos[photo]['url'] }}" width="500" height="600" />
+</li>
+{% endfor %} {% endblock %}

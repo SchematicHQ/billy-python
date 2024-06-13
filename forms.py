@@ -5,7 +5,7 @@ from wtforms import Form
 from wtforms.validators import DataRequired
 
 class SearchForm(FlaskForm):
-  search = StringField('search', validators=[DataRequired()])
+  search = StringField('', validators=[DataRequired()], render_kw={"placeholder": "Search billy for images..."})
 
 class LoginForm(FlaskForm):
   username = StringField('username', validators=[DataRequired()])
