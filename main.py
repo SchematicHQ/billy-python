@@ -28,15 +28,18 @@ with app.app_context():
 
 @app.context_processor
 def set_global_html_variable_values():
-    user=current_user
+    user = current_user
+    #company = Company.query.get(user.company_id)
 
     template_config = {}
 
     company_id = user.company.id if hasattr(user, 'company') else None
+    company_name = user.company.company if hasattr(user, 'company') else None
     search_feature = schematic.check_flag(company_id,'search-queries')
     favorite_feature = schematic.check_flag(company_id,'favorite-flag')
 
     template_config = {
+        'company_name' : company_name,
         'search_feature' : search_feature,
         'favoriate_feature' : favorite_feature
     }
