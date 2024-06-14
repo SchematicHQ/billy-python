@@ -4,8 +4,8 @@
   <div
     class="inline-flex items-center text-lg text-left px-4 py-2 leading-none rounded-full bg-slate-100 text-center mx-auto"
   >
-    <span class="font-medium ml-1">{{ search }}</span> 
-    <span class="inline-block mx-2">-</span> 
+    <span class="font-medium ml-1">{{ search }}</span>
+    <span class="inline-block mx-2">-</span>
     <a
       href="/"
       class="text-blue-500 leading-none hover:underline mr-l text-sm inline-block"
@@ -27,7 +27,11 @@
           <div class="leading-none text-sm">Jasdeep</div>
         </div>
       </div>
-      <button id="{{photo}}" onclick="submit_favorite('{{photo}}')">
+      <button
+        id="{{photo}}"
+        class="art-stats-button"
+        onclick="submit_favorite('{{photo}}')"
+      >
         <svg
           width="16"
           height="14"
@@ -49,6 +53,15 @@
 </div>
 
 <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var buttons = document.querySelectorAll(".art-stats-button");
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function (event) {
+        this.classList.add("active");
+      });
+    });
+  });
+
   function submit_favorite(photo_id) {
     // var button = event.target;
     // var element_id = button.id;
