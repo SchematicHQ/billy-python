@@ -5,18 +5,16 @@ from flask import Flask, render_template
 from flask import Flask
 from flask import redirect, url_for
 from flask import request
-import sys
-import xmltodict, json
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user
+from flask_login import LoginManager, login_user, logout_user, current_user
 from stripe import StripeClient
 from vendors import schematic_python as schematic 
 from vendors import flickr
+from models import db, Company, Favorites, Users
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("SQL_DATABASE")
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
-db = SQLAlchemy()
+
 #client = StripeClient("sk_test_...")
 
 login_manager = LoginManager()
@@ -27,27 +25,6 @@ db.init_app(app)
 # Create database within app context
 with app.app_context():
     db.create_all()
-
-######
-# Model classes
-######
-class Company(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    company = db.Column(db.String(250), unique=True, nullable=False)
-    users = db.relationship('Users', backref='company', lazy=True, uselist=False)
-    favorites = db.relationship('Favorites', backref='company', lazy=True)
-
-class Favorites(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(250), unique=True, nullable=False)
-    photo_id = db.Column(db.String(250), unique=True, nullable=False)
-    company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
-
-class Users(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(250), unique=True, nullable=False)
-    password = db.Column(db.String(250), nullable=False)
-    company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
 
 @app.context_processor
 def set_global_html_variable_values():
@@ -67,7 +44,7 @@ def set_global_html_variable_values():
     return template_config
 
 ######
-## Flask routes
+## Page routes
 ######
 
 @app.route('/', methods=['GET', 'POST'])
@@ -114,6 +91,15 @@ def change_plan(plan_id):
 
     return render_template('settings.html', current_path=request.path)
 
+@app.route('/favorites')
+def favorites():
+    user = current_user
+    company = Company.query.get(current_user.company_id)
+    favorites = company.favorites
+    photo_array = flickr.retrieve_images_by_photo_id(favorites)
+
+    return render_template('favorites.html', photos = photo_array, current_path=request.path)
+
 @app.route('/submit_favorite/<photo_id>', methods=['GET','POST'])
 def add_favorite(photo_id):
     user = current_user
@@ -132,25 +118,13 @@ def add_favorite(photo_id):
         return photo_id
     return photo_id
 
-@app.route('/favorites')
-def favorites():
-    user = current_user
-    company = Company.query.get(current_user.company_id)
-    favorites = company.favorites
-    photo_array = flickr.retrieve_images_by_photo_id(favorites)
-
-    print(photo_array)
-    return render_template('favorites.html', photos = photo_array, current_path=request.path)
-
 ######
 # Authentication Routes - Login, logout, registration
 ######
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    print("in route")
     # If a post request was made, find the user by filtering for the username
     if request.method == "POST":
-        print("in post")
         user = Users.query.filter_by(
             username=request.form.get("username")).first()
         
