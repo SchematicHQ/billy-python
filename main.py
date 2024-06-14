@@ -181,7 +181,7 @@ def register():
         db.session.commit()
 
         # Create Schematic user and company on registration
-        schematic.company_create_update(user)
+        schematic.company_create_update(user, plan='basic')
         schematic.user_create_update(user)
 
         # Once user account created, redirect them to login route
