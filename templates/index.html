@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block body %} {% if current_user.is_authenticated%}
+{% extends 'base.html' %} {% block body %} 
+
+{% if current_user.is_authenticated and search_feature %}
 
 <div class="relative flex items-center justify-center mt-4">
   <div
@@ -46,34 +48,7 @@
 
 <div class="columns-4 gap-8">
   <div class="flex flex-col break-inside-avoid-column mb-8">
-    <img
-      src="https://picsum.photos/200/300"
-      class="w-full rounded-2xl"
-      alt=""
-    />
     <div class="flex flex-row justify-between mt-4">
-      <div class="flex flex-row space-x-2 items-center">
-        <div>
-          <img src="https://picsum.photos/25/25" class="rounded-full" alt="" />
-        </div>
-        <div class="flex flex-col space-y-1">
-          <div class="leading-none text-sm">Jasdeep</div>
-        </div>
-      </div>
-      <svg
-        width="16"
-        height="14"
-        viewBox="0 0 16 14"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M8 13C6.0425 12.34 1.25 9.4375 1.25 4.75C1.25 2.68 2.93 1 5 1C6.23 1 7.3175 1.5925 8 2.5C8.6825 1.585 9.7775 1 11 1C13.07 1 14.75 2.6725 14.75 4.75C14.75 9.445 9.9575 12.34 8 13Z"
-          stroke="#6B7280"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
     </div>
   </div>
 </div>

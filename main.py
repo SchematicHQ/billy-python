@@ -49,6 +49,24 @@ class Users(UserMixin, db.Model):
     password = db.Column(db.String(250), nullable=False)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
 
+@app.context_processor
+def set_global_html_variable_values():
+    user=current_user
+
+    template_config = {}
+
+    company_id = user.company.id if hasattr(user, 'company') else None
+    search_feature = schematic.check_flag(company_id,'search-queries')
+    favorite_feature = schematic.check_flag(company_id,'favorite-flag')
+
+    template_config = {
+        'search_feature' : search_feature,
+        'favoriate_feature' : favorite_feature
+    }
+
+    return template_config
+
+
 ## routes
 
 @app.route('/', methods=['GET', 'POST'])
@@ -59,7 +77,6 @@ def main():
     schematic.send_identify_event(user)
     
     return render_template('index.html', form=form, search_feature=search_feature, current_path=request.path)
-
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -79,6 +96,21 @@ def search():
 
 @app.route('/settings')
 def settings():
+    user=current_user
+
+    response = schematic.get_company(user)
+    
+    return render_template('settings.html', current_path=request.path)
+
+@app.route('/settings/change_plan/<plan_id>')
+def change_plan(plan_id):
+    user = current_user
+
+    if request.method == 'GET':
+        schematic.company_create_update(user, plan=plan_id)
+
+        return plan_id
+
     return render_template('settings.html', current_path=request.path)
 
 @app.route('/submit_favorite/<photo_id>', methods=['GET','POST'])
@@ -92,7 +124,6 @@ def add_favorite(photo_id):
         company.favorites.append(favorite)
         db.session.add(favorite)
         db.session.commit()
-
 
         # update favorite count
         schematic.company_create_update(user, favorite_count=Favorites.query.filter_by(company_id=company.id).count())

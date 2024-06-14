@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block body %}
+{% extends 'base.html' %} 
+
+{% block body %}
 <div class="">
   <div class="text-4xl mb-4 -mt-4">Settings</div>
 
@@ -42,7 +44,7 @@
                 ></path>
               </svg>
             </div>
-            <span class="font-medium">Searches per user - 10</span>
+            <span class="font-medium">Searches per user - 1</span>
           </div>
           <div class="flex items-center">
             <div
@@ -63,31 +65,12 @@
             </div>
             <span class="font-medium">Favorites per user - 5</span>
           </div>
-          <div class="flex items-center">
-            <div
-              class="mr-4 bg-gray-200/80 flex items-center justify-center rounded-full h-9 w-9"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M18.4321 8.49259L13.6197 13.3051V2H11.3803V13.3051L6.56778 8.49259L5 10.0593L12.5 17.5593L20 10.0593L18.4321 8.49259Z"
-                  fill="black"
-                ></path>
-                <path
-                  d="M6.34314 19.9102H18.6556V22.1485H6.34314V19.9102Z"
-                  fill="black"
-                ></path>
-              </svg>
-            </div>
-            <span class="font-medium">Downloads per user - 1</span>
-          </div>
         </div>
+        <br>
+        <button class="text-blue-500 leading-none hover:underline" id="basic" onclick="change_plan(this.id)">Change plan</button>
+        <br>
       </div>
+
     </div>
     <div class="bg-gray-50 p-8 rounded-lg min-w-[290px]">
       <div class="flex justify-between items-center">
@@ -148,31 +131,11 @@
             </div>
             <span class="font-medium">Favorites per user - 10</span>
           </div>
-          <div class="flex items-center">
-            <div
-              class="mr-4 bg-gray-200/80 flex items-center justify-center rounded-full h-9 w-9"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M18.4321 8.49259L13.6197 13.3051V2H11.3803V13.3051L6.56778 8.49259L5 10.0593L12.5 17.5593L20 10.0593L18.4321 8.49259Z"
-                  fill="black"
-                ></path>
-                <path
-                  d="M6.34314 19.9102H18.6556V22.1485H6.34314V19.9102Z"
-                  fill="black"
-                ></path>
-              </svg>
-            </div>
-            <span class="font-medium">Downloads per user - 5</span>
-          </div>
         </div>
       </div>
+      <br>
+      <button class="text-blue-500 leading-none hover:underline" id="standard" onclick="change_plan(this.id)">Change plan</button>
+      <br>
     </div>
     <div class="bg-gray-50 p-8 rounded-lg min-w-[290px]">
       <div class="flex justify-between items-center">
@@ -233,52 +196,34 @@
             </div>
             <span class="font-medium">Favorites per user - Unlimited</span>
           </div>
-          <div class="flex items-center">
-            <div
-              class="mr-4 bg-gray-200/80 flex items-center justify-center rounded-full h-9 w-9"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M18.4321 8.49259L13.6197 13.3051V2H11.3803V13.3051L6.56778 8.49259L5 10.0593L12.5 17.5593L20 10.0593L18.4321 8.49259Z"
-                  fill="black"
-                ></path>
-                <path
-                  d="M6.34314 19.9102H18.6556V22.1485H6.34314V19.9102Z"
-                  fill="black"
-                ></path>
-              </svg>
-            </div>
-            <span class="font-medium">Downloads per user - Unlimited</span>
-          </div>
-          <div class="flex items-center">
-            <div
-              class="mr-4 bg-gray-200/80 flex items-center justify-center rounded-full h-9 w-9"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M8.25846 2V7.2505H6L7.32604 17.7495H11.4394V23H13.5606V17.7495H17.674L19 7.2505H16.7415V2H14.6203V7.2505H10.3797V2H8.25846Z"
-                  fill="black"
-                ></path>
-              </svg>
-            </div>
-            <span class="font-medium">Slack Integration</span>
-          </div>
         </div>
+        <br>
+        <button class="text-blue-500 leading-none hover:underline" id="pro" onclick="change_plan(this.id)">Change plan</button>
+        <br>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+    function change_plan(plan_id) {
+    // var button = event.target;
+    // var element_id = button.id;
+    // var index = element_id
+
+    // console.log(button)
+    // console.log(element_id)
+    // console.log(index)
+    // console.log(`/submit_favorite/${index}`)
+    var plan = plan_id;
+    console.log(plan);
+
+    fetch(`/settings/change_plan/${plan_id}`)
+      .then(function (response) {
+        return response.text();
+      })
+      .then();
+    }
+</script>
 
 {% endblock %}

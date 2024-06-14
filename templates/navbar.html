@@ -6,6 +6,8 @@
  
 
     <!-- Alert -->
+    {% if not search_feature %}
+
     <div
       class="flex flex-row w-full space-x-4 flex-1 bg-red-100 text-black justify-between px-5 py-1.5 items-center rounded-lg"
     >
@@ -28,9 +30,11 @@
       </div>
 
       <div>
-        <span class="text-blue-500 leading-none hover:underline">Change plan</span>
+        <a href='/settings'><span class="text-blue-500 leading-none hover:underline">Change plan</span></a>
       </div>
     </div>
+    {% endif %}
+
 
     <!-- User/Notifications -->
     <div class="flex space-x-6">

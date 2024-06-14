@@ -86,6 +86,21 @@ def company_create_update(current_user, **kwargs):
 
     return response
 
+######
+# Schematic Get Metadata - get trait metadata from schematic
+######
+def get_company(current_user):
+    company = {}
+    company["organization_id"] = current_user.company.id
+
+    response = client.companies.lookup_company(
+        keys = company
+    )
+
+    print(json.dumps(json.loads(response.json()), sort_keys=True, indent=4, separators=(",", ": ")))
+    
+    return response.json()
+
 def send_identify_event(current_user, **kwargs):
     name = current_user.username
 
