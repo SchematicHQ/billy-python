@@ -5,17 +5,15 @@ from flask import Flask, render_template
 from flask import Flask
 from flask import redirect, url_for
 from flask import request
-import flickr_api
-from flickr_api.api import flickr
 import sys
 import xmltodict, json
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user
 from stripe import StripeClient
 from vendors import schematic_python as schematic 
+from vendors import flickr
 
 app = Flask(__name__)
-flickr_api.set_keys(api_key = os.environ.get("FLICKR_API_KEY"), api_secret=os.environ.get("FLICKR_SECRET_KEY"))
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("SQL_DATABASE")
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 db = SQLAlchemy()
@@ -30,7 +28,9 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
-# model classes
+######
+# Model classes
+######
 class Company(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     company = db.Column(db.String(250), unique=True, nullable=False)
@@ -66,8 +66,9 @@ def set_global_html_variable_values():
 
     return template_config
 
-
-## routes
+######
+## Flask routes
+######
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
@@ -83,7 +84,7 @@ def search():
     form = SearchForm()
     if form.validate_on_submit():
         searched_data = form.search.data
-        photo_array = retrieve_images_by_keyword(searched_data)
+        photo_array = flickr.retrieve_images_by_keyword(searched_data)
 
         # send event to schematic
         schematic.send_track_event(current_user,'search-query')
@@ -136,13 +137,14 @@ def favorites():
     user = current_user
     company = Company.query.get(current_user.company_id)
     favorites = company.favorites
-    photo_array = retrieve_images_by_photo_id(favorites)
+    photo_array = flickr.retrieve_images_by_photo_id(favorites)
 
     print(photo_array)
     return render_template('favorites.html', photos = photo_array, current_path=request.path)
 
-# login, logout, registration
-
+######
+# Authentication Routes - Login, logout, registration
+######
 @app.route("/login", methods=["GET", "POST"])
 def login():
     print("in route")
@@ -189,28 +191,6 @@ def register():
     # Renders sign_up template if user made a GET request
     return render_template("sign_up.html")
 
-# flickr integration
-def retrieve_images_by_keyword(search):
-    photo_array = {}
-
-    photos = xmltodict.parse(flickr.photos.search(text = search, per_page = 20, page = 1, safe_search = 1))
-
-    for photo in photos['rsp']['photos']['photo']:
-        photo_array[photo['@id']] = {"owner" : photo['@owner'], "id" : photo['@id'], "url" : "https://live.staticflickr.com/"+photo['@server']+"/"+photo["@id"]+"_"+photo['@secret']+".jpg"}
-    
-    return photo_array
-
-def retrieve_images_by_photo_id(photos):
-    photo_array = {}
-    
-    for photo in photos:
-        if photo.photo_id:
-            photo_metadata = xmltodict.parse(flickr.photos.getInfo(photo_id = photo.photo_id))
-            photo_metadata = photo_metadata['rsp']['photo']
-            photo_array[photo_metadata['@id']] = {"owner" : photo_metadata['owner']['@nsid'], "id" : photo_metadata['@id'], "url" : "https://live.staticflickr.com/"+photo_metadata['@server']+"/"+photo_metadata["@id"]+"_"+photo_metadata['@secret']+".jpg"}
-    
-    return photo_array
- 
 @login_manager.user_loader
 def loader_user(user_id):
     return Users.query.get(user_id)

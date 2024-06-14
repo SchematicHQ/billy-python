@@ -101,6 +101,9 @@ def get_company(current_user):
     
     return response.json()
 
+######
+# Schematic Identify Event - send updated user information to Schematic
+######
 def send_identify_event(current_user, **kwargs):
     name = current_user.username
 
@@ -125,6 +128,9 @@ def send_identify_event(current_user, **kwargs):
 
     return response
 
+######
+# Schematic Track Event - send usage to Schematic
+######
 def send_track_event(current_user, event_name):
     user = {}
     user["user_id"] = current_user.id
@@ -139,9 +145,3 @@ def send_track_event(current_user, event_name):
     )
 
     return response
-
-"""     if current_user.company.stripe_id:
-    company["stripe_customer_id"] = current_user.company.stripe_id
-else:
-    create_stripe_user()
-    company["stripe_customer_id"] = current_user.company.stripe_id """
