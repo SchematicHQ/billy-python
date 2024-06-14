@@ -1,14 +1,55 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block body %} 
 
-{% block body %}
-    {% if current_user.is_authenticated %}
-        <form action="/search" method="POST">
-            {{ form.hidden_tag() }}
-            {{ form.search }}
-            <input type="submit" value="Search">
-        </form>
-    {% else %}
-        <h1>You are not logged in</h1>
-        <a href="/login">Login</a>
-    {% endif %}
-{% endblock %}
+{% if current_user.is_authenticated and search_feature %}
+
+<div class="relative flex items-center justify-center mt-4">
+  <div
+    class="absolute overflow-hidden max-w-[650px] max-h-[250px] top-[36px] rounded-2xl shadow-2xl"
+  >
+    <img class="" src="{{url_for('static', filename='billy-bg.png')}}" />
+  </div>
+  <form
+    action="/search"
+    method="POST"
+    class="flex relative w-full search-field"
+  >
+    {{ form.hidden_tag() }} {{ form.search }}
+
+    <div class="search-field-button">
+      <input type="submit" value="Search" />
+      <svg
+        class="w-6 h-6"
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g clip-path="url(#clip0_16_1968)">
+          <path
+            d="M18.3332 18.3333L16.6665 16.6666M9.58317 17.5C10.6228 17.5 11.6523 17.2952 12.6127 16.8973C13.5732 16.4995 14.446 15.9164 15.1811 15.1812C15.9162 14.4461 16.4994 13.5734 16.8972 12.6129C17.2951 11.6524 17.4998 10.6229 17.4998 9.58329C17.4998 8.54366 17.2951 7.51421 16.8972 6.55372C16.4994 5.59322 15.9162 4.72049 15.1811 3.98536C14.446 3.25023 13.5732 2.6671 12.6127 2.26925C11.6523 1.8714 10.6228 1.66663 9.58317 1.66663C7.48354 1.66663 5.4699 2.5007 3.98524 3.98536C2.50058 5.47003 1.6665 7.48366 1.6665 9.58329C1.6665 11.6829 2.50058 13.6966 3.98524 15.1812C5.4699 16.6659 7.48354 17.5 9.58317 17.5Z"
+            stroke="#ffffff"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_16_1968">
+            <rect width="20" height="20" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
+  </form>
+</div>
+
+{% else %}
+
+<div class="columns-4 gap-8">
+  <div class="flex flex-col break-inside-avoid-column mb-8">
+    <div class="flex flex-row justify-between mt-4">
+    </div>
+  </div>
+</div>
+{% endif %} {% endblock %}
