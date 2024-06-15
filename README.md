@@ -9,6 +9,7 @@ git clone https://github.com/SchematicHQ/billy-python.git
 
 ```
 pip install -r requirements.txt
+npm install
 ```
 
 3. Initialize the .env file:
@@ -17,14 +18,16 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-4. Ask Jas for Flickr keys
+4. Populate your .env file
+- Generate Flickr keys here: https://www.flickr.com/services/apps/create/
+- Generate a Schematic API key: https://docs.schematichq.com/quickstart#setting-up-dev-and-prod-environments
 
 ## Running locally
 
 Run the following command
 
 ```
-flask --app main run         
+npm start run     
 ```
 
 Open the app locally at http://127.0.0.1:5000. Navigate to `/register` route to create a new user account.
