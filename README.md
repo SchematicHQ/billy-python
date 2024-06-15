@@ -2,7 +2,7 @@
 1. Clone the repo:
 
 ```
-git clone https://github.com/SchematicHQ/BillyAI.git
+git clone https://github.com/SchematicHQ/billy-python.git
 ```
 
 2. Install all requirements:
