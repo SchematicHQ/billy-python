@@ -19,18 +19,10 @@
   <div class="flex flex-col break-inside-avoid-column mb-8">
     <img src="{{ photos[photo]['url'] }}" class="w-full rounded-2xl" alt="" />
     <div class="flex flex-row justify-between mt-4">
-      <div class="flex flex-row space-x-2 items-center">
-        <div>
-          <img src="https://picsum.photos/25/25" class="rounded-full" alt="" />
-        </div>
-        <div class="flex flex-col space-y-1">
-          <div class="leading-none text-sm">Jasdeep</div>
-        </div>
-      </div>
       <button
         id="{{photo}}"
         class="art-stats-button"
-        onclick="submit_favorite('{{photo}}')"
+        onclick="submit_favorite('{{ photo }}')"
       >
         <svg
           width="16"
@@ -64,17 +56,7 @@
   });
 
   function submit_favorite(photo_id) {
-    // var button = event.target;
-    // var element_id = button.id;
-    // var index = element_id
-
-    // console.log(button)
-    // console.log(element_id)
-    // console.log(index)
-    // console.log(`/submit_favorite/${index}`)
     var index = photo_id;
-    console.log(photo_id);
-    console.log(index);
 
     fetch(`/submit_favorite/${index}`)
       .then(function (response) {

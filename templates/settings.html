@@ -207,16 +207,7 @@
 
 <script>
     function change_plan(plan_id) {
-    // var button = event.target;
-    // var element_id = button.id;
-    // var index = element_id
-
-    // console.log(button)
-    // console.log(element_id)
-    // console.log(index)
-    // console.log(`/submit_favorite/${index}`)
     var plan = plan_id;
-    console.log(plan);
 
     fetch(`/settings/change_plan/${plan_id}`)
       .then(function (response) {
