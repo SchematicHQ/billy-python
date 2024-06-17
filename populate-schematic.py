@@ -1,4 +1,4 @@
-from schematic.client import Schematic, SchematicConfig, LocalCache, EventBodyIdentifyCompany
+from schematic.client import Schematic
 import config
 import os
 import json
@@ -96,7 +96,7 @@ data = {
             }
         }
 
-# initiatlize client & pass updated config
+# initiatlize client
 client = Schematic(os.environ.get("SCHEMATIC_API_KEY"))
 
 print(data)
