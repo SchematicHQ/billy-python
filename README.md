@@ -1,4 +1,4 @@
-## Getting started
+## Getting started with the Billy app
 1. Clone the repo:
 
 ```
@@ -21,6 +21,10 @@ cp .env.example .env
 4. Populate your .env file
 - Generate Flickr keys here: https://www.flickr.com/services/apps/create/
 - Generate a Schematic API key: https://docs.schematichq.com/quickstart#setting-up-dev-and-prod-environments
+
+## Getting started with the Schematic app
+
+1. ...
 
 ## Running locally
 
