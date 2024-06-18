@@ -2,7 +2,7 @@
 
 A demo using Schematic to implement packaging in an application.
 
-This app is an image search engine using the Flickr API. It implements a metered packaging model, checks for feature access based on their current subscription, reports usage of a feature, and manages the subscription lifecycle using Schematic.
+This app is an image search engine using the Flickr API. It implements a metered packaging model, checks for feature access based on the current subscription, reports usage of a feature, and manages the subscription lifecycle using Schematic.
 
 ## Why Schematic?
 We believe that B2B businesses should not reinvent the wheel to support pricing and packaging, and that a single platform, not a collection of disconnected code, tools, and processes, should support customers from purchase to feature delivery and ultimately billing.
