@@ -99,17 +99,12 @@ data = {
 # initiatlize client
 client = Schematic(os.environ.get("SCHEMATIC_API_KEY"))
 
-#print(data)
-
 def populate_schematic(data):
-    print(data)
 
     features = data['features']
     plans = data['plans']
 
     company_response = create_company()
-#    print(company_response)
-#    print(json.dumps(json.loads(company_response.json())))
     company_response = json.loads(company_response.json())
 
 #    print(company_response['data'])
@@ -120,9 +115,6 @@ def populate_schematic(data):
 
     trait_response_favorite = upsert_trait('favorite_count', company_response['data'])
     trait_response = json.loads(trait_response_favorite.json())
-
-#    print(features)
-#    print(plans)
 
     # create features
     feature_ids = {}
