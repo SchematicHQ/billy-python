@@ -1,6 +1,6 @@
 # Schematic Sample App for an Image Search Project
 
-A demo of using Schematic to implement packaging in an application.
+A demo using Schematic to implement packaging in an application.
 
 This app is an image search engine using the Flickr API. It implements a metered packaging model, checks for feature access based on their current subscription, reports usage of a feature, and manages the subscription lifecycle using Schematic.
 
