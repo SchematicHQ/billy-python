@@ -25,13 +25,13 @@ cp .env.example .env
 ## Getting started with the Schematic app
 
 1. Log into your Schematic account
-2. Run the following to seed your Schematic environment with Billy data
+2. Run the following to seed your Schematic environment with Billy data (make sure your .env file has a valid Schematic API key first)
 
 ```
  npm run populate-schematic
 ```
 
-3. Run the Billy app locally (ensure the API key in your .env file corresponds to the environment you just seeded)
+3. Run the Billy app locally
 
 ## Running locally
 
@@ -41,4 +41,4 @@ Run the following command
 npm start run
 ```
 
-Open the app locally at http://127.0.0.1:5000. Navigate to `/register` route to create a new user account.
+Open the app locally at http://127.0.0.1:5000/register.
