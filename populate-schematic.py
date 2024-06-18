@@ -1,4 +1,4 @@
-from schematic.client import Schematic
+from schematic import Schematic, CreateOrUpdateConditionGroupRequestBody, CreateOrUpdateConditionRequestBody
 import config
 import os
 import json
@@ -108,26 +108,27 @@ def populate_schematic(data):
     plans = data['plans']
 
     company_response = create_company()
-    print(company_response)
-    print(json.dumps(json.loads(company_response.json())))
+#    print(company_response)
+#    print(json.dumps(json.loads(company_response.json())))
     company_response = json.loads(company_response.json())
-    print(company_response['data'])
+
+#    print(company_response['data'])
+
     trait_response_plan = upsert_trait('plan', company_response['data'])
+    json_trait_response_plan = json.loads(trait_response_plan.json())
+    plan_trait_id = json_trait_response_plan['data']['entity_traits'][0]['definition']['id']
+
     trait_response_favorite = upsert_trait('favorite_count', company_response['data'])
     trait_response = json.loads(trait_response_favorite.json())
 
-    print(features)
-    print(plans)
+#    print(features)
+#    print(plans)
 
     # create features
     feature_ids = {}
     for feature in features:
-        print(feature)
-        print(features[feature])
         feature_data = features[feature]
-        print(feature_data['description'])
         # replace trait with id
-        print(trait_response)
         if feature_data['trait_id'] == 'favorite_count':
             feature_data['trait_id'] = trait_response['data']['entity_traits'][0]['definition']['id']
         response = create_feature(feature_data)
@@ -136,15 +137,17 @@ def populate_schematic(data):
     # create plans
     plan_ids = {}
     for plan in plans:
-        print(plan)
         plan_data = plans[plan]
-        print(plan_data)
         response = create_plan(plan_data)
         plan_ids[plan_data['name']] = response.data.id
 
     # create entitlements
     for plan in plans:
         response = create_entitlements(plans[plan], plan_ids[plan], feature_ids)
+
+    # create plan audiences
+    for plan in plans:
+       response = create_audiences(plans[plan], plan_ids[plan], plan_trait_id)
 
     delete_company(company_response['data']['id'])
 
@@ -178,6 +181,27 @@ def create_plan(plan):
 
     return response
 
+def create_audiences(plan, plan_id, plan_trait_id):
+    client.plans.update_audience(
+        plan_audience_id=plan_id,
+        condition_groups = [
+            CreateOrUpdateConditionGroupRequestBody(
+                conditions=[
+                    CreateOrUpdateConditionRequestBody(
+                        condition_type="trait",
+                        operator="eq",
+                        trait_id =plan_trait_id,
+                        trait_value=plan['name'],
+                        metric_value=0,
+                        resource_ids=[]
+                    )
+                ]
+            )
+        ],
+        conditions=[]
+    )
+
+    return "audience created"
 
 def create_entitlements(plan, plan_id, feature_ids):
 
@@ -214,7 +238,6 @@ def delete_company(id):
 
 # create trait
 def upsert_trait(trait, company):
-    print(company)
     response = client.companies.upsert_company_trait(
         keys = {
             company['keys'][0]['key'] : company['keys'][0]['value']

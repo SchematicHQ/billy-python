@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tw": "npx tailwindcss -i ./static/css/main.css -o ./static/css/styles.css --watch",
     "flask": "flask --app main run",
-    "start": "concurrently \"npm run tw\" \"npm run flask\""
+    "start": "concurrently \"npm run tw\" \"npm run flask\"",
+    "populate-schematic": "python3 populate-schematic.py"
   },
   "keywords": [],
   "author": "",

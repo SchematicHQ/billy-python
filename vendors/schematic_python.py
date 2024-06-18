@@ -26,6 +26,8 @@ def check_flag(organization_id, flag_key):
     # set flag key to evaluate
     key = flag_key
 
+    print(os.environ.get("SCHEMATIC_API_KEY"))
+
     # retrieve flag value from schematic)
     # if value is not available in local cache, Schematic client will submit network request
     response = client.features.check_flag(
