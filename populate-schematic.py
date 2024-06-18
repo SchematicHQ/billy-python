@@ -99,7 +99,7 @@ data = {
 # initiatlize client
 client = Schematic(os.environ.get("SCHEMATIC_API_KEY"))
 
-print(data)
+#print(data)
 
 def populate_schematic(data):
     print(data)
@@ -151,7 +151,7 @@ def populate_schematic(data):
 
     delete_company(company_response['data']['id'])
 
-    return 'objects created'
+    return 'Done seeding Schematic'
 
 def create_feature(feature):
     response = client.features.create_feature(
