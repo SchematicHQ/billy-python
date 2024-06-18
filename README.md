@@ -1,4 +1,4 @@
-# Schematic Sample App for an Image Search App
+# Schematic Sample App for an Image Search Project
 
 A demo of using Schematic to implement packaging in an application.
 
