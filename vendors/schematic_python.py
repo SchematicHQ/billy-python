@@ -1,4 +1,9 @@
-from schematic.client import Schematic, SchematicConfig, LocalCache, EventBodyIdentifyCompany
+from schematic.client import (
+    Schematic,
+    SchematicConfig,
+    LocalCache,
+    EventBodyIdentifyCompany,
+)
 import config
 import os
 import json
@@ -8,32 +13,29 @@ cache_size_bytes = 1000000
 cache_ttl = 1000  # in milliseconds
 sch_config = SchematicConfig(
     cache_providers=[LocalCache[bool](cache_size_bytes, cache_ttl)],
-    flag_defaults={"some-flag-key": True} # update later
+    flag_defaults={"some-flag-key": True},  # update later
 )
 
 # initiatlize client & pass updated config
 client = Schematic(os.environ.get("SCHEMATIC_API_KEY"), sch_config)
+
 
 ######
 # Schematic Flag Check - retrieve flag value for given company
 ######
 def check_flag(organization_id, flag_key):
     # set company context to reference company
-    company = {
-        "organization_id" : str(organization_id)
-    }
+    company = {"organization_id": str(organization_id)}
 
     # set flag key to evaluate
     key = flag_key
 
     # retrieve flag value from schematic)
     # if value is not available in local cache, Schematic client will submit network request
-    response = client.features.check_flag(
-        key = key,
-        company=company
-        )
-    
+    response = client.features.check_flag(key=key, company=company)
+
     return response.data.value
+
 
 ######
 # Schematic User Upsert - create and update user
@@ -41,13 +43,9 @@ def check_flag(organization_id, flag_key):
 def user_create_update(current_user, **kwargs):
     name = str(current_user.username)
 
-    user = {
-        "user_id" : current_user.id
-    }
+    user = {"user_id": current_user.id}
 
-    company = {
-        "organization_id" : current_user.company.id
-    }
+    company = {"organization_id": current_user.company.id}
 
     print(user)
     print(company)
@@ -56,21 +54,19 @@ def user_create_update(current_user, **kwargs):
     for key, value in kwargs.items():
         traits[key] = value
 
-    response  = client.companies.upsert_user(
-      company = company,
-      keys = user,
-      name = name,
-      traits = traits
+    response = client.companies.upsert_user(
+        company=company, keys=user, name=name, traits=traits
     )
 
     return response
+
 
 ######
 # Schematic Company Upsert - create and update company
 ######
 def company_create_update(current_user, **kwargs):
     name = str(current_user.company.company)
-    
+
     company = {}
     company["organization_id"] = current_user.company.id
 
@@ -78,13 +74,10 @@ def company_create_update(current_user, **kwargs):
     for key, value in kwargs.items():
         traits[key] = value
 
-    response = client.companies.upsert_company(
-        keys = company,
-        name = name,
-        traits = traits
-    )
+    response = client.companies.upsert_company(keys=company, name=name, traits=traits)
 
     return response
+
 
 ######
 # Schematic Get Metadata - get trait metadata from schematic
@@ -93,13 +86,19 @@ def get_company(current_user):
     company = {}
     company["organization_id"] = current_user.company.id
 
-    response = client.companies.lookup_company(
-        keys = company
+    response = client.companies.lookup_company(keys=company)
+
+    print(
+        json.dumps(
+            json.loads(response.json()),
+            sort_keys=True,
+            indent=4,
+            separators=(",", ": "),
+        )
     )
 
-    print(json.dumps(json.loads(response.json()), sort_keys=True, indent=4, separators=(",", ": ")))
-    
     return response.json()
+
 
 ######
 # Schematic Identify Event - send updated user information to Schematic
@@ -123,10 +122,11 @@ def send_identify_event(current_user, **kwargs):
         company=EventBodyIdentifyCompany(
             keys=company,
         ),
-        traits=traits
+        traits=traits,
     )
 
     return response
+
 
 ######
 # Schematic Track Event - send usage to Schematic
