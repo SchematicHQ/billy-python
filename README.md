@@ -2,7 +2,11 @@
 
 A demo using Schematic to implement packaging in an application.
 
-This app is an image search engine using the Flickr API. It implements a metered packaging model, checks for feature access based on the current subscription, reports usage of a feature, and manages the subscription lifecycle using Schematic.
+This app is an image search engine using the Flickr API. It:
+- Implements metered packaging model
+- [Checks for feature access based on the current subscription](https://github.com/SchematicHQ/billy-python/blob/e03d3bb35b87925eb4151842894b784585330d77/vendors/schematic_python.py#L24)
+- [Reports usage of a feature](https://github.com/SchematicHQ/billy-python/blob/e03d3bb35b87925eb4151842894b784585330d77/vendors/schematic_python.py#L132)
+- [Manages the subscription lifecycle using Schematic](https://github.com/SchematicHQ/billy-python/blob/e03d3bb35b87925eb4151842894b784585330d77/main.py#L96)
 
 ## Why Schematic?
 We believe that B2B businesses should not reinvent the wheel to support pricing and packaging, and that a single platform, not a collection of disconnected code, tools, and processes, should support customers from purchase to feature delivery and ultimately billing.
@@ -55,3 +59,9 @@ npm start run
 ```
 
 Open the app locally at http://127.0.0.1:5000/register.
+
+## Resources
+
+- [How to implement metered features in Scehmatic](https://github.com/SchematicHQ/billy-python/blob/e03d3bb35b87925eb4151842894b784585330d77/main.py#L96)
+- [Sending usage events to Schematic](https://docs.schematichq.com/quickstart#sending-track-and-identify-calls)
+- [Evaluating company entitlements in Schematic](https://docs.schematichq.com/quickstart#evaluating-entitlements)
