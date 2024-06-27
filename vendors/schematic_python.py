@@ -4,7 +4,6 @@ from schematic.client import (
     LocalCache,
     EventBodyIdentifyCompany,
 )
-import config
 import os
 import json
 

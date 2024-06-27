@@ -1,12 +1,10 @@
 import os
-import config
-from forms import SearchForm, LoginForm
+from forms import SearchForm
 from flask import Flask, render_template
 from flask import Flask
 from flask import redirect, url_for
 from flask import request
 from flask_login import LoginManager, login_user, logout_user, current_user
-from stripe import StripeClient
 from vendors import schematic_python as schematic
 from vendors import flickr
 from models import db, Company, Favorites, Users
