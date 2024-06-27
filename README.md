@@ -7,7 +7,7 @@ This app is an image search engine using the Flickr API. It implements a metered
 ## Why Schematic?
 We believe that B2B businesses should not reinvent the wheel to support pricing and packaging, and that a single platform, not a collection of disconnected code, tools, and processes, should support customers from purchase to feature delivery and ultimately billing.
 
-Schematic decouples billing and entitlements logic from application code. With it, you can launch, package, meter, and monitor features without needing to restructure your app or concern yourself with breaking changes.
+Schematic decouples billing and entitlements logic from application code. With it, you can launch, package, meter, and monitor features without needing to restructure your app or introduce breaking changes.
 
 ## Getting started with the Billy app
 1. Clone the repo:
@@ -23,30 +23,32 @@ pip install -r requirements.txt
 npm install
 ```
 
-3. Initialize the .env file:
+npm is used as a task runner and to support TailwindCSS.
+
+3. Initialize the .env file by copying the example file:
 
 ```
 cp .env.example .env
 ```
 
 4. Populate your .env file
-- Generate Flickr keys here: https://www.flickr.com/services/apps/create/
-- Generate a Schematic API key: https://docs.schematichq.com/quickstart#setting-up-dev-and-prod-environments
+- Generate Flickr API keys here (to fill in FLICKR_API_KEY, FLICKR_SECRET_KEY): https://www.flickr.com/services/apps/create/
+- Generate Schematic API keys in your account here (to fill in SCHEMATIC_API_KEY): https://docs.schematichq.com/quickstart#setting-up-dev-and-prod-environments
 
 ## Getting started with the Schematic app
 
 1. Log into your Schematic account
-2. Run the following to seed your Schematic environment with Billy data (make sure your .env file has a valid Schematic API key first)
+2. Run the following to seed your Schematic environment with flags, features, and plans for Billy (make sure your .env file has a valid Schematic API key first):
 
 ```
- npm run populate-schematic
+npm run populate-schematic
 ```
 
 3. Run the Billy app locally
 
 ## Running locally
 
-Run the following command
+Run the following command:
 
 ```
 npm start run

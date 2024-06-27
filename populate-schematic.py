@@ -101,9 +101,7 @@ data = {
 }
 
 # initiatlize client
-# client = Schematic(os.environ.get("SCHEMATIC_API_KEY"))
-client = Schematic("sch_dev_y5Z94ATG5CyXztzTWXhx0tF4iYV0V4q9")
-
+client = Schematic(os.environ.get("SCHEMATIC_API_KEY"))
 
 def populate_schematic(data):
 
