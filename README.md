@@ -62,6 +62,6 @@ Open the app locally at http://127.0.0.1:5000/register.
 
 ## Resources
 
-- [How to implement metered features in Scehmatic](https://github.com/SchematicHQ/billy-python/blob/e03d3bb35b87925eb4151842894b784585330d77/main.py#L96)
+- [How to implement metered features with Scehmatic](https://github.com/SchematicHQ/billy-python/blob/e03d3bb35b87925eb4151842894b784585330d77/main.py#L96)
 - [Sending usage events to Schematic](https://docs.schematichq.com/quickstart#sending-track-and-identify-calls)
-- [Evaluating company entitlements in Schematic](https://docs.schematichq.com/quickstart#evaluating-entitlements)
+- [Evaluating company entitlements with Schematic](https://docs.schematichq.com/quickstart#evaluating-entitlements)
