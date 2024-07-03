@@ -3,6 +3,8 @@
 .npmrc
 /.venv
 /.venv/*
+/venv
+/venv/* 
 
 # db
 db.sqlite
