@@ -14,17 +14,18 @@ We believe that B2B businesses should not reinvent the wheel to support pricing 
 Schematic decouples billing and entitlements logic from application code. With it, you can launch, package, meter, and monitor features without needing to restructure your app or introduce breaking changes.
 
 ## Getting started with the Billy app
-1. Create and activate a virtualenv
+
+1. Clone the repo:
+
+```
+git clone https://github.com/SchematicHQ/billy-python.git
+```
+
+2. Create and activate a virtualenv in the directory
 
 ```
 python3 -m venv venv
 . venv/bin/activate
-```
-
-2. Clone the repo:
-
-```
-git clone https://github.com/SchematicHQ/billy-python.git
 ```
 
 3. Install all requirements:
