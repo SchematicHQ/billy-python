@@ -34,3 +34,5 @@ db.sqlite
 __pycache__/
 node_modules/
 instance/db.sqlite
+/instance
+/instance/*
