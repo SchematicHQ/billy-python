@@ -17,13 +17,13 @@ data = {
             "features": {
                 "search-queries": {
                     "key": "search-queries",
-                    "value_type": "Numeric",
+                    "value_type": "numeric",
                     "limit": 1,
                     "period": "current_month",
                 },
                 "favorites": {
                     "key": "favorites",
-                    "value_type": "Numeric",
+                    "value_type": "numeric",
                     "limit": 1,
                     "period": None,
                 },
@@ -36,13 +36,13 @@ data = {
             "features": {
                 "search-queries": {
                     "key": "search-queries",
-                    "value_type": "Numeric",
+                    "value_type": "numeric",
                     "limit": 5,
                     "period": "current_month",
                 },
                 "favorites": {
                     "key": "favorites",
-                    "value_type": "Numeric",
+                    "value_type": "numeric",
                     "limit": 5,
                     "period": None,
                 },
@@ -55,13 +55,13 @@ data = {
             "features": {
                 "search-queries": {
                     "key": "search-queries",
-                    "value_type": "Unlimited",
+                    "value_type": "unlimited",
                     "limit": None,
                     "period": "current_month",
                 },
                 "favorites": {
                     "key": "favorites",
-                    "value_type": "Unlimited",
+                    "value_type": "unlimited",
                     "limit": None,
                     "period": None,
                 },
@@ -120,7 +120,7 @@ def populate_schematic(data):
     ]
 
     trait_response_favorite = upsert_trait("favorite_count", company_response["data"])
-    trait_response = json.loads(trait_response_favorite.json())
+    json_trait_response_favorite = json.loads(trait_response_favorite.json())
 
     # create features
     feature_ids = {}
@@ -128,7 +128,7 @@ def populate_schematic(data):
         feature_data = features[feature]
         # replace trait with id
         if feature_data["trait_id"] == "favorite_count":
-            feature_data["trait_id"] = trait_response["data"]["entity_traits"][0][
+            feature_data["trait_id"] = json_trait_response_favorite["data"]["entity_traits"][0][
                 "definition"
             ]["id"]
         response = create_feature(feature_data)
@@ -222,7 +222,7 @@ def create_entitlements(plan, plan_id, feature_ids):
 
 def create_company():
     response = client.companies.upsert_company(
-        keys={"org_id": "123"}, traits={"favorite_count": 1}
+        keys={"org_id": "123"}
     )
 
     return response

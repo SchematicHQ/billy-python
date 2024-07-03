@@ -14,13 +14,20 @@ We believe that B2B businesses should not reinvent the wheel to support pricing 
 Schematic decouples billing and entitlements logic from application code. With it, you can launch, package, meter, and monitor features without needing to restructure your app or introduce breaking changes.
 
 ## Getting started with the Billy app
-1. Clone the repo:
+1. Create and activate a virtualenv
+
+```
+python3 -m venv venv
+. venv/bin/activate
+```
+
+2. Clone the repo:
 
 ```
 git clone https://github.com/SchematicHQ/billy-python.git
 ```
 
-2. Install all requirements:
+3. Install all requirements:
 
 ```
 pip install -r requirements.txt
@@ -29,13 +36,13 @@ npm install
 
 npm is used as a task runner and to support TailwindCSS.
 
-3. Initialize the .env file by copying the example file:
+4. Initialize the .env file by copying the example file:
 
 ```
 cp .env.example .env
 ```
 
-4. Populate your .env file
+5. Populate your .env file
 - Generate Flickr API keys here (to fill in FLICKR_API_KEY, FLICKR_SECRET_KEY): https://www.flickr.com/services/apps/create/
 - Generate Schematic API keys in your account here (to fill in SCHEMATIC_API_KEY): https://docs.schematichq.com/quickstart#setting-up-dev-and-prod-environments
 
