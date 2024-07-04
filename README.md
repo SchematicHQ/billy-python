@@ -74,7 +74,7 @@ Once you log in, Schematic will register the company and user and assign access 
 
 ![Screenshot of Schematic](https://github.com/SchematicHQ/billy-python/blob/main/static/schematic-screenshot.png)
 
-To see how Schematic is integrated into this app to manage features and plans, go [here](https://github.com/SchematicHQ/billy-python/blob/main/vendors/schematic_python.py).
+To see how Schematic is integrated into the Billy app to manage features and plans, go [here](https://github.com/SchematicHQ/billy-python/blob/main/vendors/schematic_python.py).
 
 To read more about how to use the Schematic app, go [here](https://docs.schematichq.com/).
 
