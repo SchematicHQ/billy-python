@@ -72,6 +72,8 @@ Open the app locally at http://127.0.0.1:5000/. Create an account on the sign up
 
 Once you log in, Schematic will register the company and user and assign access appropriately. You can also now use [Schematic](https://app.schematichq.com/) to manage plans, limits, and entitlements for anyone you register with Billy.
 
+![Screenshot of Schematic](https://github.com/SchematicHQ/billy-python/blob/main/static/schematic-screenshot.png)
+
 To see how Schematic is integrated into this app to manage features and plans, go [here](https://github.com/SchematicHQ/billy-python/blob/main/vendors/schematic_python.py).
 
 To read more about how to use the Schematic app, go [here](https://docs.schematichq.com/).
