@@ -44,7 +44,7 @@ cp .env.example .env
 ```
 
 5. Populate your .env file
-- Generate Flickr API keys here (to fill in FLICKR_API_KEY, FLICKR_SECRET_KEY): https://www.flickr.com/services/apps/create/
+- Generate Flickr API keys here (to fill in FLICKR_API_KEY, FLICKR_SECRET_KEY): https://www.flickr.com/services/apps/create/ (you will need to create a dummy app - call it anything)
 - Generate Schematic API keys in your account here (to fill in SCHEMATIC_API_KEY): https://docs.schematichq.com/quickstart#setting-up-dev-and-prod-environments
 
 ## Getting started with the Schematic app
@@ -66,7 +66,15 @@ Run the following command:
 npm start run
 ```
 
-Open the app locally at http://127.0.0.1:5000/register.
+Open the app locally at http://127.0.0.1:5000/. Create an account on the sign up page and log in.
+
+## Next steps
+
+Once you log in, Schematic will register the company and user and assign access appropriately. You can also now use [Schematic](https://app.schematichq.com/) to manage plans, limits, and entitlements for anyone you register with Billy.
+
+To see how Schematic is integrated into this app to manage features and plans, go [here](https://github.com/SchematicHQ/billy-python/blob/main/vendors/schematic_python.py).
+
+To read more about how to use the Schematic app, go [here](https://docs.schematichq.com/).
 
 ## Resources
 

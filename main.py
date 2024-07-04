@@ -4,7 +4,7 @@ from flask import Flask, render_template
 from flask import Flask
 from flask import redirect, url_for
 from flask import request
-from flask_login import LoginManager, login_user, logout_user, current_user
+from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 from vendors import schematic_python as schematic
 from vendors import flickr
 from models import db, Company, Favorites, Users
@@ -17,6 +17,8 @@ app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = 'login'
+login_manager.login_message = "Please log in to access this page"
 
 # Initialize app with extension
 db.init_app(app)
@@ -52,6 +54,7 @@ def set_global_html_variable_values():
 
 
 @app.route("/", methods=["GET", "POST"])
+@login_required
 def main():
     form = SearchForm()
     user = current_user
