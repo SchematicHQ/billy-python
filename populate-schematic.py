@@ -113,13 +113,13 @@ def populate_schematic(data):
 
     #    print(company_response['data'])
 
-    trait_response_plan = upsert_trait("plan", company_response["data"])
+    trait_response_plan = upsert_trait("plan", company_response["data"], "basic")
     json_trait_response_plan = json.loads(trait_response_plan.json())
     plan_trait_id = json_trait_response_plan["data"]["entity_traits"][0]["definition"][
         "id"
     ]
 
-    trait_response_favorite = upsert_trait("favorite_count", company_response["data"])
+    trait_response_favorite = upsert_trait("favorite_count", company_response["data"], 0)
     json_trait_response_favorite = json.loads(trait_response_favorite.json())
 
     # create features
@@ -235,15 +235,22 @@ def delete_company(id):
 
 
 # create trait
-def upsert_trait(trait, company):
-    response = client.companies.upsert_company_trait(
-        keys={company["keys"][0]["key"]: company["keys"][0]["value"]},
-        trait=trait,
-        incr=1,
-    )
+def upsert_trait(trait, company, set):
+    # if set is a number, set the incr option; if not, set the set_ option
+    if str(set).isdigit():
+        response = client.companies.upsert_company_trait(
+            keys={company["keys"][0]["key"]: company["keys"][0]["value"]},
+            trait=trait,
+            incr=set
+        )
+    else:
+        response = client.companies.upsert_company_trait(
+            keys={company["keys"][0]["key"]: company["keys"][0]["value"]},
+            trait=trait,
+            set_=set
+        )        
 
     return response
-
 
 response = populate_schematic(data)
 print(response)
