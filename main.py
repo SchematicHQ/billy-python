@@ -122,13 +122,6 @@ def favorites():
 def add_favorite(photo_id):
     user = current_user
 
-    print("checking")
-    print(user)
-    print(user.company.id)
-    print(schematic.check_flag(
-        user.company.id, "favorites"
-    ))
-
     # POST request -- check if company is at limit already
     if request.method == "GET" and schematic.check_flag(
         user.company.id, "favorites"
