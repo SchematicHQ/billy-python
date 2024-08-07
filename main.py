@@ -37,12 +37,12 @@ def set_global_html_variable_values():
     company_id = user.company.id if hasattr(user, "company") else None
     company_name = user.company.company if hasattr(user, "company") else None
     search_feature = schematic.check_flag(company_id, "search-queries")
-    favorite_feature = schematic.check_flag(company_id, "favorite-flag")
+    favorite_feature = schematic.check_flag(company_id, "favorites")
 
     template_config = {
         "company_name": company_name,
         "search_feature": search_feature,
-        "favoriate_feature": favorite_feature,
+        "favorite_feature": favorite_feature,
     }
 
     return template_config
@@ -122,9 +122,16 @@ def favorites():
 def add_favorite(photo_id):
     user = current_user
 
+    print("checking")
+    print(user)
+    print(user.company.id)
+    print(schematic.check_flag(
+        user.company.id, "favorites"
+    ))
+
     # POST request -- check if company is at limit already
     if request.method == "GET" and schematic.check_flag(
-        user.company.id, "favorite-flag"
+        user.company.id, "favorites"
     ):
         company = Company.query.get(user.company_id)
         favorite = Favorites(photo_id=photo_id)

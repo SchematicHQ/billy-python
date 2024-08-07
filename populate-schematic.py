@@ -11,7 +11,7 @@ import json
 data = {
     "plans": {
         "basic": {
-            "plan_type": "pricing_plan",
+            "plan_type": "plan",
             "description": "Our entry-level plan for new users",
             "name": "basic",
             "features": {
@@ -30,7 +30,7 @@ data = {
             },
         },
         "standard": {
-            "plan_type": "pricing_plan",
+            "plan_type": "plan",
             "description": "Our mid-level plan for advanced users",
             "name": "standard",
             "features": {
@@ -49,7 +49,7 @@ data = {
             },
         },
         "pro": {
-            "plan_type": "pricing_plan",
+            "plan_type": "plan",
             "description": "Our highest-level plan for expert users",
             "name": "pro",
             "features": {
@@ -76,7 +76,7 @@ data = {
             "trait_id": None,
             "event_subtype": "search-query",
             "flag": {
-                "default_value": True,
+                "default_value": False,
                 "description": None,
                 "flag_type": "boolean",
                 "key": "search-queries",
@@ -90,7 +90,7 @@ data = {
             "trait_id": "favorite_count",
             "event_subtype": None,
             "flag": {
-                "default_value": True,
+                "default_value": False,
                 "description": None,
                 "flag_type": "boolean",
                 "key": "favorites",
