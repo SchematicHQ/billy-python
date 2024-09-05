@@ -12,7 +12,7 @@ cache_size_bytes = 1000000
 cache_ttl = 1000  # in milliseconds
 sch_config = SchematicConfig(
     cache_providers=[LocalCache[bool](cache_size_bytes, cache_ttl)],
-    flag_defaults={"some-flag-key": True},  # update later
+    flag_defaults={"some-flag-key": True},  # update later for default fallbacks
 )
 
 # initiatlize client & pass updated config
@@ -45,9 +45,6 @@ def user_create_update(current_user, **kwargs):
     user = {"user_id": current_user.id}
 
     company = {"organization_id": current_user.company.id}
-
-    print(user)
-    print(company)
 
     traits = {}
     for key, value in kwargs.items():
@@ -86,15 +83,6 @@ def get_company(current_user):
     company["organization_id"] = current_user.company.id
 
     response = client.companies.lookup_company(keys=company)
-
-    print(
-        json.dumps(
-            json.loads(response.json()),
-            sort_keys=True,
-            indent=4,
-            separators=(",", ": "),
-        )
-    )
 
     return response.json()
 
