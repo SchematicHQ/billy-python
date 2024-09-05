@@ -28,11 +28,8 @@ db.sqlite
 
 # OS
 .DS_Store
-
-
 /static/css/style.css
 __pycache__/
 node_modules/
 instance/db.sqlite
-/instance
 /instance/*
