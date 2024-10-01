@@ -94,10 +94,10 @@ def send_identify_event(current_user, **kwargs):
     name = current_user.username
 
     user = {}
-    user["user_id"] = current_user.id
+    user["user_id"] = str(current_user.id)
 
     company = {}
-    company["organization_id"] = current_user.company.id
+    company["organization_id"] = str(current_user.company.id)
 
     traits = {}
     for key, value in kwargs.items():
@@ -120,10 +120,10 @@ def send_identify_event(current_user, **kwargs):
 ######
 def send_track_event(current_user, event_name):
     user = {}
-    user["user_id"] = current_user.id
+    user["user_id"] = str(current_user.id)
 
     company = {}
-    company["organization_id"] = current_user.company.id
+    company["organization_id"] = str(current_user.company.id)
 
     response = client.track(
         event=event_name,
